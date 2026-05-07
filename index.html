@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no">
 
 <title>Hari's Smart Home Pro</title>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <style>
 
@@ -16,7 +24,7 @@
 }
 
 body{
-    font-family: Arial, sans-serif;
+    font-family:Arial,sans-serif;
     margin:0;
     min-height:100vh;
     background:#1a202c;
@@ -113,7 +121,8 @@ body{
 
 .main-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    grid-template-columns:
+    repeat(auto-fit,minmax(320px,1fr));
     gap:25px;
     padding:25px;
     max-width:1200px;
@@ -130,14 +139,16 @@ body{
     box-shadow:0 12px 30px rgba(0,0,0,0.2);
 }
 
-/* TEMP GAUGE */
+/* TEMP */
 
 .gauge{
     width:140px;
     height:140px;
     border-radius:50%;
     margin:20px auto;
-    background:conic-gradient(var(--primary) 0deg,#e2e8f0 0deg);
+    background:
+    conic-gradient(var(--primary) 0deg,
+    #e2e8f0 0deg);
     display:flex;
     justify-content:center;
     align-items:center;
@@ -195,13 +206,13 @@ body{
     border:2px solid transparent;
 }
 
-/* MOTION */
+/* STATUS */
 
-#motStatus{
+.status-box{
     padding:15px;
     border-radius:15px;
-    font-weight:bold;
     margin-top:20px;
+    font-weight:bold;
     transition:0.3s;
 }
 
@@ -256,6 +267,7 @@ body{
 }
 
 </style>
+
 </head>
 
 <body>
@@ -268,15 +280,25 @@ body{
 
         <h1>Hari's Home</h1>
 
-        <p style="color:#666;">Authorized Access Only</p>
+        <p style="color:#666;">
+            Authorized Access Only
+        </p>
 
-        <input type="email" id="email" placeholder="Enter Email">
+        <input type="email"
+               id="email"
+               placeholder="Enter Email">
 
-        <input type="password" id="password" placeholder="Enter Password">
+        <input type="password"
+               id="password"
+               placeholder="Enter Password">
 
-        <button id="loginBtn">Login</button>
+        <button id="loginBtn">
+            Login
+        </button>
 
-        <p id="loginError" style="color:red;display:none;"></p>
+        <p id="loginError"
+           style="color:red;display:none;">
+        </p>
 
     </div>
 
@@ -286,22 +308,38 @@ body{
 
 <div id="dashboardContent">
 
+    <!-- NAVBAR -->
+
     <nav class="top-nav">
 
         <div>
+
             <h2 style="margin:0;">
-                <i class="fas fa-home"></i> IOT DASH
+                <i class="fas fa-home"></i>
+                IOT DASH
             </h2>
 
-            <small>Hari's Smart Home</small>
+            <small>
+                Hari's Smart Home
+            </small>
+
         </div>
 
         <div class="time-group">
-            <p id="liveTime">00:00:00</p>
-            <p id="liveDate">Loading...</p>
+
+            <p id="liveTime">
+                00:00:00
+            </p>
+
+            <p id="liveDate">
+                Loading...
+            </p>
+
         </div>
 
     </nav>
+
+    <!-- GRID -->
 
     <div class="main-grid">
 
@@ -313,10 +351,15 @@ body{
                 TEMPERATURE
             </small>
 
-            <div class="gauge" id="tempGauge">
+            <div class="gauge"
+                 id="tempGauge">
 
                 <span class="gauge-text">
-                    <span id="tempVal">--</span>°C
+
+                    <span id="tempVal">
+                        --
+                    </span>°C
+
                 </span>
 
             </div>
@@ -331,18 +374,75 @@ body{
                 ENVIRONMENT & SECURITY
             </small>
 
-            <h3 style="font-size:2rem;margin-top:25px;">
+            <h3 style="
+                font-size:2rem;
+                margin-top:25px;
+            ">
 
-                <i class="fas fa-tint" style="color:#2196f3;"></i>
+                <i class="fas fa-tint"
+                   style="color:#2196f3;">
+                </i>
 
-                <span id="humVal">--</span>%
+                <span id="humVal">
+                    --
+                </span>%
 
             </h3>
 
             <div id="motStatus"
-                 style="background:#edf2f7;color:#555;">
+                 class="status-box"
+                 style="
+                 background:#edf2f7;
+                 color:#555;
+            ">
 
-                 SCANNING MOTION...
+                SCANNING MOTION...
+
+            </div>
+
+        </div>
+
+        <!-- GAS SENSOR -->
+
+        <div class="card">
+
+            <small style="font-weight:bold;color:#888;">
+                GAS MONITOR
+            </small>
+
+            <h1 style="
+                font-size:3rem;
+                margin-top:20px;
+                color:#ff9800;
+            ">
+
+                <i class="fas fa-smog"></i>
+
+            </h1>
+
+            <h2 id="gasValue"
+                style="
+                font-size:2.5rem;
+                margin:15px 0;
+                color:#333;
+            ">
+
+                0
+
+            </h2>
+
+            <small style="color:#777;">
+                MQ9 GAS VALUE
+            </small>
+
+            <div id="gasStatus"
+                 class="status-box"
+                 style="
+                 background:#f0fff4;
+                 color:#2f855a;
+            ">
+
+                SAFE
 
             </div>
 
@@ -358,24 +458,40 @@ body{
 
             <div class="control-grid">
 
-                <button class="btn-device btn-off" id="btn1">
+                <button class="btn-device btn-off"
+                        id="btn1">
+
                     <i class="fas fa-lightbulb"></i>
+
                     Light
+
                 </button>
 
-                <button class="btn-device btn-off" id="btn2">
+                <button class="btn-device btn-off"
+                        id="btn2">
+
                     <i class="fas fa-fan"></i>
+
                     Fan
+
                 </button>
 
-                <button class="btn-device btn-off" id="btn3">
+                <button class="btn-device btn-off"
+                        id="btn3">
+
                     <i class="fas fa-snowflake"></i>
+
                     AC
+
                 </button>
 
-                <button class="btn-device btn-off" id="btn4">
+                <button class="btn-device btn-off"
+                        id="btn4">
+
                     <i class="fas fa-plug"></i>
+
                     Fridge
+
                 </button>
 
             </div>
@@ -389,12 +505,17 @@ body{
     <div class="footer-btns">
 
         <button id="allOff">
+
             <i class="fas fa-power-off"></i>
+
             EMERGENCY SHUTDOWN
+
         </button>
 
         <button id="logoutBtn">
+
             Logout
+
         </button>
 
     </div>
@@ -404,7 +525,9 @@ body{
 <!-- FIREBASE -->
 
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
 
 <script>
@@ -413,19 +536,26 @@ body{
 
 const firebaseConfig = {
 
-    apiKey: "AIzaSyCuGWFGCUMByBnOwtH_e0QbiMQelQxL7cQ",
+    apiKey:
+    "AIzaSyCuGWFGCUMByBnOwtH_e0QbiMQelQxL7cQ",
 
-    authDomain: "project1-881b2.firebaseapp.com",
+    authDomain:
+    "project1-881b2.firebaseapp.com",
 
-    databaseURL: "https://project1-881b2-default-rtdb.europe-west1.firebasedatabase.app",
+    databaseURL:
+    "https://project1-881b2-default-rtdb.europe-west1.firebasedatabase.app",
 
-    projectId: "project1-881b2",
+    projectId:
+    "project1-881b2",
 
-    storageBucket: "project1-881b2.firebasestorage.app",
+    storageBucket:
+    "project1-881b2.firebasestorage.app",
 
-    messagingSenderId: "663620030897",
+    messagingSenderId:
+    "663620030897",
 
-    appId: "1:663620030897:web:085a490249e8960fddad90"
+    appId:
+    "1:663620030897:web:085a490249e8960fddad90"
 
 };
 
@@ -441,15 +571,19 @@ setInterval(() => {
 
     const now = new Date();
 
-    document.getElementById("liveTime").innerText =
-        now.toLocaleTimeString();
+    document.getElementById("liveTime")
+    .innerText =
+    now.toLocaleTimeString();
 
-    document.getElementById("liveDate").innerText =
-        now.toLocaleDateString('en-GB',{
-            weekday:'long',
-            day:'numeric',
-            month:'short'
-        });
+    document.getElementById("liveDate")
+    .innerText =
+    now.toLocaleDateString('en-GB',{
+
+        weekday:'long',
+        day:'numeric',
+        month:'short'
+
+    });
 
 },1000);
 
@@ -457,12 +591,17 @@ setInterval(() => {
 
 function updateDailyBg(){
 
-    const seed = new Date().toDateString();
+    const seed =
+    new Date().toDateString();
 
     document.body.style.backgroundImage =
-    `linear-gradient(rgba(0,0,0,0.4),
+
+    `linear-gradient(
+    rgba(0,0,0,0.4),
     rgba(0,0,0,0.4)),
-    url('https://picsum.photos/seed/${btoa(seed)}/1920/1080')`;
+
+    url('https://picsum.photos/seed/
+    ${btoa(seed)}/1920/1080')`;
 
 }
 
@@ -470,21 +609,27 @@ updateDailyBg();
 
 /* LOGIN */
 
-document.getElementById("loginBtn").onclick = () => {
+document.getElementById("loginBtn")
+.onclick = () => {
 
     const email =
-        document.getElementById("email").value;
+    document.getElementById("email").value;
 
     const password =
-        document.getElementById("password").value;
+    document.getElementById("password").value;
 
-    auth.signInWithEmailAndPassword(email,password)
+    auth.signInWithEmailAndPassword(
+        email,
+        password
+    )
 
     .then(() => {
 
-        document.getElementById("loginOverlay").style.display = "none";
+        document.getElementById(
+        "loginOverlay").style.display = "none";
 
-        document.getElementById("dashboardContent").style.display = "flex";
+        document.getElementById(
+        "dashboardContent").style.display = "flex";
 
         startLiveSync();
 
@@ -493,12 +638,13 @@ document.getElementById("loginBtn").onclick = () => {
     .catch(error => {
 
         const err =
-            document.getElementById("loginError");
+        document.getElementById(
+        "loginError");
 
         err.style.display = "block";
 
         err.innerText =
-            "Login Failed : " + error.message;
+        "Login Failed : " + error.message;
 
     });
 
@@ -510,63 +656,139 @@ function startLiveSync(){
 
     /* TEMPERATURE */
 
-    db.ref("temperature").on("value", snap => {
+    db.ref("temperature")
+    .on("value", snap => {
 
         const val = snap.val();
 
-        if(val !== null){
+        if(val === "Disconnected"){
 
-            document.getElementById("tempVal").innerText =
-                parseFloat(val).toFixed(1);
+            document.getElementById(
+            "tempVal").innerText = "--";
+        }
 
-            document.getElementById("tempGauge").style.background =
-                `conic-gradient(var(--primary)
-                ${(val/50)*360}deg,
-                #e2e8f0 0deg)`;
+        else if(val !== null){
+
+            document.getElementById(
+            "tempVal").innerText =
+            parseFloat(val).toFixed(1);
+
+            document.getElementById(
+            "tempGauge").style.background =
+
+            `conic-gradient(
+            var(--primary)
+            ${(val/50)*360}deg,
+            #e2e8f0 0deg)`;
         }
 
     });
 
     /* HUMIDITY */
 
-    db.ref("humidity").on("value", snap => {
+    db.ref("humidity")
+    .on("value", snap => {
 
         const val = snap.val();
 
-        if(val !== null){
+        if(val === "Disconnected"){
 
-            document.getElementById("humVal").innerText =
-                parseFloat(val).toFixed(1);
+            document.getElementById(
+            "humVal").innerText = "--";
+        }
 
+        else if(val !== null){
+
+            document.getElementById(
+            "humVal").innerText =
+            parseFloat(val).toFixed(1);
         }
 
     });
 
     /* MOTION */
 
-    db.ref("motionStatus").on("value", snap => {
+    db.ref("motionStatus")
+    .on("value", snap => {
 
         const active = snap.val();
 
         const box =
-            document.getElementById("motStatus");
+        document.getElementById(
+        "motStatus");
 
         if(active){
 
-            box.innerText = "MOTION DETECTED!";
+            box.innerText =
+            "MOTION DETECTED!";
 
-            box.style.background = "#fff5f5";
+            box.style.background =
+            "#fff5f5";
 
-            box.style.color = "#c53030";
-
+            box.style.color =
+            "#c53030";
         }
+
         else{
 
-            box.innerText = "AREA SECURE";
+            box.innerText =
+            "AREA SECURE";
 
-            box.style.background = "#f0fff4";
+            box.style.background =
+            "#f0fff4";
 
-            box.style.color = "#2f855a";
+            box.style.color =
+            "#2f855a";
+        }
+
+    });
+
+    /* GAS SENSOR */
+
+    db.ref("gasValue")
+    .on("value", snap => {
+
+        const val = snap.val();
+
+        if(val !== null){
+
+            document.getElementById(
+            "gasValue").innerText = val;
+        }
+
+    });
+
+    db.ref("gasDetected")
+    .on("value", snap => {
+
+        const active = snap.val();
+
+        const box =
+        document.getElementById(
+        "gasStatus");
+
+        if(active){
+
+            box.innerText =
+            "GAS LEAK DETECTED!";
+
+            box.style.background =
+            "#fff5f5";
+
+            box.style.color =
+            "#c53030";
+        }
+
+        else{
+
+            box.innerText =
+            "SAFE";
+
+            box.style.background =
+            "#f0fff4";
+
+            box.style.color =
+            "#2f855a";
         }
 
     });
@@ -576,27 +798,34 @@ function startLiveSync(){
     [1,2,3,4].forEach(i => {
 
         const relayRef =
-            db.ref("relay" + i);
+        db.ref("relay" + i);
 
-        relayRef.on("value", snap => {
+        relayRef.on("value",
+        snap => {
 
             const state = snap.val();
 
             const btn =
-                document.getElementById("btn" + i);
+            document.getElementById(
+            "btn" + i);
 
             btn.className =
-                state ?
-                "btn-device btn-on" :
-                "btn-device btn-off";
+            state ?
+
+            "btn-device btn-on" :
+
+            "btn-device btn-off";
 
         });
 
-        document.getElementById("btn" + i).onclick = () => {
+        document.getElementById(
+        "btn" + i).onclick = () => {
 
-            relayRef.once("value").then(snap => {
+            relayRef.once("value")
+            .then(snap => {
 
-                relayRef.set(!snap.val());
+                relayRef.set(
+                !snap.val());
 
             });
 
@@ -608,7 +837,8 @@ function startLiveSync(){
 
 /* ALL OFF */
 
-document.getElementById("allOff").onclick = () => {
+document.getElementById("allOff")
+.onclick = () => {
 
     db.ref().update({
 
@@ -623,7 +853,8 @@ document.getElementById("allOff").onclick = () => {
 
 /* LOGOUT */
 
-document.getElementById("logoutBtn").onclick = () => {
+document.getElementById("logoutBtn")
+.onclick = () => {
 
     auth.signOut().then(() => {
 
@@ -635,9 +866,11 @@ document.getElementById("logoutBtn").onclick = () => {
 
 /* INTERNET CHECK */
 
-window.addEventListener("offline", () => {
+window.addEventListener(
+"offline", () => {
 
-    alert("Internet Disconnected");
+    alert(
+    "Internet Disconnected");
 
 });
 
