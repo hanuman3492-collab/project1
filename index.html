@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
 
 <meta name="viewport"
-      content="width=device-width,
-               initial-scale=1.0,
-               maximum-scale=1.0,
-               user-scalable=no">
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+user-scalable=no">
 
-<title>Hari's Smart Home Pro</title>
+<title>Hari Smart Home AI Dashboard</title>
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -20,18 +19,26 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
 
 :root{
     --primary:#007bff;
-    --overlay:rgba(255,255,255,0.90);
+    --overlay:rgba(255,255,255,0.92);
 }
 
 body{
     font-family:Arial,sans-serif;
     margin:0;
     min-height:100vh;
-    background:#1a202c;
+
+    background-image:
+    linear-gradient(
+    rgba(0,0,0,0.55),
+    rgba(0,0,0,0.55)),
+
+    url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1920&auto=format&fit=crop');
+
     background-size:cover;
     background-position:center;
     background-repeat:no-repeat;
     background-attachment:fixed;
+
     display:flex;
     flex-direction:column;
 }
@@ -91,7 +98,7 @@ body{
 }
 
 .top-nav{
-    background:rgba(255,255,255,0.85);
+    background:rgba(255,255,255,0.88);
     backdrop-filter:blur(12px);
     padding:15px 25px;
     display:flex;
@@ -123,32 +130,45 @@ body{
     display:grid;
     grid-template-columns:
     repeat(auto-fit,minmax(320px,1fr));
+
     gap:25px;
+
     padding:25px;
-    max-width:1200px;
+
+    max-width:1300px;
+
     width:100%;
+
     margin:0 auto;
+
     box-sizing:border-box;
 }
 
 .card{
     background:var(--overlay);
+
     border-radius:25px;
+
     padding:30px;
+
     text-align:center;
-    box-shadow:0 12px 30px rgba(0,0,0,0.2);
+
+    box-shadow:0 12px 30px rgba(0,0,0,0.25);
 }
 
-/* TEMP */
+/* TEMPERATURE */
 
 .gauge{
     width:140px;
     height:140px;
     border-radius:50%;
     margin:20px auto;
+
     background:
-    conic-gradient(var(--primary) 0deg,
+    conic-gradient(
+    var(--primary) 0deg,
     #e2e8f0 0deg);
+
     display:flex;
     justify-content:center;
     align-items:center;
@@ -211,8 +231,8 @@ body{
 .status-box{
     padding:15px;
     border-radius:15px;
-    margin-top:20px;
     font-weight:bold;
+    margin-top:20px;
     transition:0.3s;
 }
 
@@ -285,19 +305,19 @@ body{
         </p>
 
         <input type="email"
-               id="email"
-               placeholder="Enter Email">
+        id="email"
+        placeholder="Enter Email">
 
         <input type="password"
-               id="password"
-               placeholder="Enter Password">
+        id="password"
+        placeholder="Enter Password">
 
         <button id="loginBtn">
             Login
         </button>
 
         <p id="loginError"
-           style="color:red;display:none;">
+        style="color:red;display:none;">
         </p>
 
     </div>
@@ -308,7 +328,7 @@ body{
 
 <div id="dashboardContent">
 
-    <!-- NAVBAR -->
+    <!-- NAV -->
 
     <nav class="top-nav">
 
@@ -320,7 +340,7 @@ body{
             </h2>
 
             <small>
-                Hari's Smart Home
+                Hari Smart Home
             </small>
 
         </div>
@@ -352,7 +372,7 @@ body{
             </small>
 
             <div class="gauge"
-                 id="tempGauge">
+            id="tempGauge">
 
                 <span class="gauge-text">
 
@@ -375,13 +395,11 @@ body{
             </small>
 
             <h3 style="
-                font-size:2rem;
-                margin-top:25px;
-            ">
+            font-size:2rem;
+            margin-top:25px;">
 
                 <i class="fas fa-tint"
-                   style="color:#2196f3;">
-                </i>
+                style="color:#2196f3;"></i>
 
                 <span id="humVal">
                     --
@@ -390,59 +408,68 @@ body{
             </h3>
 
             <div id="motStatus"
-                 class="status-box"
-                 style="
-                 background:#edf2f7;
-                 color:#555;
-            ">
+            class="status-box"
+            style="
+            background:#edf2f7;
+            color:#555;">
 
-                SCANNING MOTION...
+            SCANNING MOTION...
 
             </div>
 
         </div>
 
-        <!-- GAS SENSOR -->
+        <!-- MQ9 -->
 
         <div class="card">
 
             <small style="font-weight:bold;color:#888;">
-                GAS MONITOR
+                ADVANCED GAS MONITOR
             </small>
 
             <h1 style="
-                font-size:3rem;
-                margin-top:20px;
-                color:#ff9800;
-            ">
+            font-size:3rem;
+            margin-top:20px;
+            color:#ff9800;">
 
                 <i class="fas fa-smog"></i>
 
             </h1>
 
-            <h2 id="gasValue"
-                style="
-                font-size:2.5rem;
-                margin:15px 0;
-                color:#333;
-            ">
+            <h1 id="gasPPM"
+            style="
+            font-size:3rem;
+            margin:10px 0;
+            color:#333;">
 
-                0
+                --
 
-            </h2>
+            </h1>
 
-            <small style="color:#777;">
-                MQ9 GAS VALUE
+            <small style="
+            color:#777;
+            font-size:1rem;">
+
+                GAS CONCENTRATION (PPM)
+
             </small>
 
-            <div id="gasStatus"
-                 class="status-box"
-                 style="
-                 background:#f0fff4;
-                 color:#2f855a;
-            ">
+            <h3 id="gasType"
+            style="
+            margin-top:20px;
+            color:#444;">
 
-                SAFE
+                WAITING...
+
+            </h3>
+
+            <div id="gasStatus"
+            class="status-box"
+            style="
+            background:#edf2f7;
+            color:#555;">
+
+            SENSOR INITIALIZING...
 
             </div>
 
@@ -459,7 +486,7 @@ body{
             <div class="control-grid">
 
                 <button class="btn-device btn-off"
-                        id="btn1">
+                id="btn1">
 
                     <i class="fas fa-lightbulb"></i>
 
@@ -468,7 +495,7 @@ body{
                 </button>
 
                 <button class="btn-device btn-off"
-                        id="btn2">
+                id="btn2">
 
                     <i class="fas fa-fan"></i>
 
@@ -477,7 +504,7 @@ body{
                 </button>
 
                 <button class="btn-device btn-off"
-                        id="btn3">
+                id="btn3">
 
                     <i class="fas fa-snowflake"></i>
 
@@ -486,7 +513,7 @@ body{
                 </button>
 
                 <button class="btn-device btn-off"
-                        id="btn4">
+                id="btn4">
 
                     <i class="fas fa-plug"></i>
 
@@ -532,7 +559,7 @@ body{
 
 <script>
 
-/* FIREBASE CONFIG */
+/* FIREBASE */
 
 const firebaseConfig = {
 
@@ -546,16 +573,7 @@ const firebaseConfig = {
     "https://project1-881b2-default-rtdb.europe-west1.firebasedatabase.app",
 
     projectId:
-    "project1-881b2",
-
-    storageBucket:
-    "project1-881b2.firebasestorage.app",
-
-    messagingSenderId:
-    "663620030897",
-
-    appId:
-    "1:663620030897:web:085a490249e8960fddad90"
+    "project1-881b2"
 
 };
 
@@ -577,7 +595,8 @@ setInterval(() => {
 
     document.getElementById("liveDate")
     .innerText =
-    now.toLocaleDateString('en-GB',{
+    now.toLocaleDateString(
+    'en-GB',{
 
         weekday:'long',
         day:'numeric',
@@ -586,26 +605,6 @@ setInterval(() => {
     });
 
 },1000);
-
-/* BACKGROUND */
-
-function updateDailyBg(){
-
-    const seed =
-    new Date().toDateString();
-
-    document.body.style.backgroundImage =
-
-    `linear-gradient(
-    rgba(0,0,0,0.4),
-    rgba(0,0,0,0.4)),
-
-    url('https://picsum.photos/seed/
-    ${btoa(seed)}/1920/1080')`;
-
-}
-
-updateDailyBg();
 
 /* LOGIN */
 
@@ -619,17 +618,17 @@ document.getElementById("loginBtn")
     document.getElementById("password").value;
 
     auth.signInWithEmailAndPassword(
-        email,
-        password
-    )
+    email,password)
 
     .then(() => {
 
         document.getElementById(
-        "loginOverlay").style.display = "none";
+        "loginOverlay").style.display =
+        "none";
 
         document.getElementById(
-        "dashboardContent").style.display = "flex";
+        "dashboardContent").style.display =
+        "flex";
 
         startLiveSync();
 
@@ -743,9 +742,30 @@ function startLiveSync(){
 
     });
 
-    /* GAS SENSOR */
+    /* GAS PPM */
 
-    db.ref("gasValue")
+    db.ref("gasPPM")
+    .on("value", snap => {
+
+        const val = snap.val();
+
+        if(val === "--"){
+
+            document.getElementById(
+            "gasPPM").innerText = "--";
+        }
+
+        else if(val !== null){
+
+            document.getElementById(
+            "gasPPM").innerText = val;
+        }
+
+    });
+
+    /* GAS TYPE */
+
+    db.ref("gasType")
     .on("value", snap => {
 
         const val = snap.val();
@@ -753,24 +773,38 @@ function startLiveSync(){
         if(val !== null){
 
             document.getElementById(
-            "gasValue").innerText = val;
+            "gasType").innerText = val;
         }
 
     });
 
-    db.ref("gasDetected")
+    /* GAS STATUS */
+
+    db.ref("gasStatus")
     .on("value", snap => {
 
-        const active = snap.val();
+        const val = snap.val();
 
         const box =
         document.getElementById(
         "gasStatus");
 
-        if(active){
+        if(val === "Disconnected"){
 
             box.innerText =
-            "GAS LEAK DETECTED!";
+            "MQ9 NOT CONNECTED";
+
+            box.style.background =
+            "#edf2f7";
+
+            box.style.color =
+            "#555";
+        }
+
+        else if(val === "DANGER"){
+
+            box.innerText =
+            "DANGEROUS GAS DETECTED!";
 
             box.style.background =
             "#fff5f5";
@@ -782,7 +816,7 @@ function startLiveSync(){
         else{
 
             box.innerText =
-            "SAFE";
+            "AIR QUALITY SAFE";
 
             box.style.background =
             "#f0fff4";
@@ -803,7 +837,8 @@ function startLiveSync(){
         relayRef.on("value",
         snap => {
 
-            const state = snap.val();
+            const state =
+            snap.val();
 
             const btn =
             document.getElementById(
@@ -864,7 +899,7 @@ document.getElementById("logoutBtn")
 
 };
 
-/* INTERNET CHECK */
+/* INTERNET */
 
 window.addEventListener(
 "offline", () => {
