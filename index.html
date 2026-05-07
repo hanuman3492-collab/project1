@@ -1,297 +1,647 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background-color: #f9f9f9;
-      margin: 0;
-      padding: 0 10px 40px;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      justify-content: space-between;
-    }
-    h1 {
-      margin-top: 30px;
-      font-size: 1.8rem;
-    }
-    .relay-card {
-      display: inline-block;
-      background-color: white;
-      padding: 20px;
-      margin: 15px;
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      width: 220px;
-      vertical-align: top;
-    }
-    .relay-card h2 {
-      margin-bottom: 10px;
-      font-size: 1.3rem;
-    }
-    .relay-card p {
-      margin-bottom: 10px;
-      font-size: 1rem;
-    }
-    .relay-card button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 10px;
-      color: white;
-      background-color: blue;
-      cursor: pointer;
-      font-size: 16px;
-	  width: 90%;
-      transition: opacity 0.3s ease;
-    }
-    .relay-card button:hover {
-      opacity: 0.8;
-    }
-    #allOffBtn, #logoutBtn {
-      max-width: 300px;
-      width: 90%;
-      padding: 12px 25px;
-      font-size: 16px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      margin: 15px auto;
-      display: block;
-      color: white;
-      transition: opacity 0.3s ease;
-    }
-    #allOffBtn {
-      background-color: #d32f2f;
-    }
-    #allOffBtn:hover {
-      opacity: 0.8;
-    }
-    #logoutBtn {
-      background-color: #555;
-    }
-    #logoutBtn:hover {
-      opacity: 0.8;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Hari's Smart Home Pro</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+
+:root{
+    --primary:#007bff;
+    --overlay:rgba(255,255,255,0.90);
+}
+
+body{
+    font-family: Arial, sans-serif;
+    margin:0;
+    min-height:100vh;
+    background:#1a202c;
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    display:flex;
+    flex-direction:column;
+}
+
+/* LOGIN */
+
+#loginOverlay{
+    position:fixed;
+    inset:0;
+    background:#f0f2f5;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.login-card{
+    width:100%;
+    max-width:400px;
+    background:white;
+    padding:40px;
+    border-radius:24px;
+    box-shadow:0 15px 35px rgba(0,0,0,0.1);
+    text-align:center;
+}
+
+.login-card input{
+    width:100%;
+    padding:15px;
+    margin:10px 0;
+    border:1px solid #ddd;
+    border-radius:12px;
+    box-sizing:border-box;
+    font-size:1rem;
+}
+
+.login-card button{
+    width:100%;
+    padding:15px;
+    background:var(--primary);
+    color:white;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:bold;
+    font-size:1rem;
+    margin-top:10px;
+}
+
+/* DASHBOARD */
+
+#dashboardContent{
+    display:none;
+    flex-direction:column;
+    width:100%;
+}
+
+.top-nav{
+    background:rgba(255,255,255,0.85);
+    backdrop-filter:blur(12px);
+    padding:15px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.time-group{
+    text-align:right;
+}
+
+#liveTime{
+    font-weight:bold;
+    font-size:1.3rem;
+    color:var(--primary);
+    margin:0;
+}
+
+#liveDate{
+    font-size:0.9rem;
+    color:#555;
+    margin:0;
+}
+
+.main-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:25px;
+    padding:25px;
+    max-width:1200px;
+    width:100%;
+    margin:0 auto;
+    box-sizing:border-box;
+}
+
+.card{
+    background:var(--overlay);
+    border-radius:25px;
+    padding:30px;
+    text-align:center;
+    box-shadow:0 12px 30px rgba(0,0,0,0.2);
+}
+
+/* TEMP GAUGE */
+
+.gauge{
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    margin:20px auto;
+    background:conic-gradient(var(--primary) 0deg,#e2e8f0 0deg);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+}
+
+.gauge::after{
+    content:"";
+    position:absolute;
+    width:115px;
+    height:115px;
+    background:white;
+    border-radius:50%;
+}
+
+.gauge-text{
+    position:relative;
+    z-index:10;
+    font-size:1.8rem;
+    font-weight:bold;
+}
+
+/* BUTTONS */
+
+.control-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+    margin-top:20px;
+}
+
+.btn-device{
+    border:none;
+    padding:25px 10px;
+    border-radius:20px;
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+    font-weight:bold;
+    transition:0.3s;
+    font-size:1rem;
+}
+
+.btn-on{
+    background:#e7f3ff;
+    color:var(--primary);
+    border:2px solid var(--primary);
+}
+
+.btn-off{
+    background:#f8fafc;
+    color:#777;
+    border:2px solid transparent;
+}
+
+/* MOTION */
+
+#motStatus{
+    padding:15px;
+    border-radius:15px;
+    font-weight:bold;
+    margin-top:20px;
+    transition:0.3s;
+}
+
+/* FOOTER */
+
+.footer-btns{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+    padding:20px;
+}
+
+#allOff{
+    background:#ff4d4f;
+    color:white;
+    border:none;
+    padding:18px;
+    border-radius:15px;
+    width:100%;
+    max-width:400px;
+    cursor:pointer;
+    font-weight:bold;
+    font-size:1rem;
+}
+
+#logoutBtn{
+    background:#444;
+    color:white;
+    border:none;
+    padding:12px;
+    border-radius:12px;
+    width:100%;
+    max-width:200px;
+    cursor:pointer;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .main-grid{
+        grid-template-columns:1fr;
+        padding:15px;
     }
 
-    /* Responsive layout */
-    #dashboard {
-      display: none;
+    .top-nav{
+        flex-direction:column;
+        gap:10px;
+        text-align:center;
     }
-    #loginForm {
-      max-width: 400px;
-      margin: 80px auto 20px;
-      background: white;
-      padding: 30px 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    #loginForm input {
-      width: 100%;
-      padding: 12px 15px;
-      margin: 10px 0 20px;
-      font-size: 1rem;
-      border: 1.5px solid #ccc;
-      border-radius: 10px;
-      box-sizing: border-box;
-      outline-offset: 2px;
-      transition: border-color 0.3s ease;
-    }
-    #loginForm input:focus {
-      border-color: #1e88e5;
-    }
-    #loginForm button {
-      width: 100%;
-      background-color: #1e88e5;
-      color: white;
-      padding: 12px;
-      font-size: 18px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    #loginForm button:hover {
-      background-color: #1565c0;
-    }
-    #dashboard .relay-container {
-      max-width: 960px;
-      margin: 20px auto 0;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    /* Smaller devices */
-    @media (max-width: 700px) {
-      .relay-card {
-        width: 90%;
-        margin: 10px auto;
-        display: block;
-      }
-      body {
-        padding: 0 10px 60px;
-      }
-    }
-    footer {
-      font-size: 0.9rem;
-      color: #666;
-      padding: 10px 0;
-      margin-top: 40px;
-    }
-  </style>
+}
+
+</style>
 </head>
+
 <body>
 
-  <h1>Hari's Home Control</h1>
+<!-- LOGIN -->
 
-  <!-- Login form -->
-  <div id="loginForm">
-    <input type="email" id="email" placeholder="Enter Email" required />
-    <input type="password" id="password" placeholder="Enter Password" required />
-    <button id="loginBtn">Login</button>
-  </div>
+<div id="loginOverlay">
 
-  <!-- Dashboard -->
-  <div id="dashboard">
-    <div class="relay-container">
-      <div class="relay-card">
-        <h2>Relay 1</h2>
-        <p>Status: <span id="status1">Loading...</span></p>
-        <button id="btn1">Toggle</button>
-      </div>
+    <div class="login-card">
 
-      <div class="relay-card">
-        <h2>Relay 2</h2>
-        <p>Status: <span id="status2">Loading...</span></p>
-        <button id="btn2">Toggle</button>
-      </div>
+        <h1>Hari's Home</h1>
 
-      <div class="relay-card">
-        <h2>Relay 3</h2>
-        <p>Status: <span id="status3">Loading...</span></p>
-        <button id="btn3">Toggle</button>
-      </div>
+        <p style="color:#666;">Authorized Access Only</p>
 
-      <div class="relay-card">
-        <h2>Relay 4</h2>
-        <p>Status: <span id="status4">Loading...</span></p>
-        <button id="btn4">Toggle</button>
-      </div>
+        <input type="email" id="email" placeholder="Enter Email">
+
+        <input type="password" id="password" placeholder="Enter Password">
+
+        <button id="loginBtn">Login</button>
+
+        <p id="loginError" style="color:red;display:none;"></p>
+
     </div>
 
-    <button id="allOffBtn">All OFF</button>
-    <button id="logoutBtn">Logout</button>
-  </div>
+</div>
 
-  <footer>
-    Created by Hari
-  </footer>
+<!-- DASHBOARD -->
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+<div id="dashboardContent">
 
-  <script>
-    // Firebase config
-    const firebaseConfig = {
-      apiKey: "AIzaSyCuGWFGCUMByBnOwtH_e0QbiMQelQxL7cQ",
-      authDomain: "project1-881b2.firebaseapp.com",
-      databaseURL: "https://project1-881b2-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "project1-881b2",
-      storageBucket: "project1-881b2.firebasestorage.app",
-      messagingSenderId: "663620030897",
-      appId: "1:663620030897:web:085a490249e8960fddad90"
-    };
+    <nav class="top-nav">
 
-    firebase.initializeApp(firebaseConfig);
+        <div>
+            <h2 style="margin:0;">
+                <i class="fas fa-home"></i> IOT DASH
+            </h2>
 
-    // Predefined login credentials (can be replaced with your logic)
-    const allowedEmail = "hanuman3492@gmail.com";
-    const allowedPassword = "Harimohan@12";
+            <small>Hari's Smart Home</small>
+        </div>
 
-    const loginForm = document.getElementById("loginForm");
-    const dashboard = document.getElementById("dashboard");
-    const loginBtn = document.getElementById("loginBtn");
+        <div class="time-group">
+            <p id="liveTime">00:00:00</p>
+            <p id="liveDate">Loading...</p>
+        </div>
 
-    loginBtn.addEventListener("click", () => {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
+    </nav>
 
-      if (!email || !password) {
-        alert("Please enter email and password.");
-        return;
-      }
+    <div class="main-grid">
 
-      // Check hardcoded credentials first
-      if(email === allowedEmail && password === allowedPassword){
-        // Sign in with Firebase
-        firebase.auth().signInWithEmailAndPassword(email, password)
-          .then(userCredential => {
-            console.log("Signed in as", userCredential.user.email);
-            loginForm.style.display = "none";
-            dashboard.style.display = "block";
-            startRelayControl();
-          })
-          .catch(error => {
-            alert("Firebase login failed: " + error.message);
-          });
-      } else {
-        alert("Invalid email or password.");
-      }
+        <!-- TEMPERATURE -->
+
+        <div class="card">
+
+            <small style="font-weight:bold;color:#888;">
+                TEMPERATURE
+            </small>
+
+            <div class="gauge" id="tempGauge">
+
+                <span class="gauge-text">
+                    <span id="tempVal">--</span>°C
+                </span>
+
+            </div>
+
+        </div>
+
+        <!-- HUMIDITY + PIR -->
+
+        <div class="card">
+
+            <small style="font-weight:bold;color:#888;">
+                ENVIRONMENT & SECURITY
+            </small>
+
+            <h3 style="font-size:2rem;margin-top:25px;">
+
+                <i class="fas fa-tint" style="color:#2196f3;"></i>
+
+                <span id="humVal">--</span>%
+
+            </h3>
+
+            <div id="motStatus"
+                 style="background:#edf2f7;color:#555;">
+
+                 SCANNING MOTION...
+
+            </div>
+
+        </div>
+
+        <!-- RELAYS -->
+
+        <div class="card">
+
+            <small style="font-weight:bold;color:#888;">
+                QUICK CONTROLS
+            </small>
+
+            <div class="control-grid">
+
+                <button class="btn-device btn-off" id="btn1">
+                    <i class="fas fa-lightbulb"></i>
+                    Light
+                </button>
+
+                <button class="btn-device btn-off" id="btn2">
+                    <i class="fas fa-fan"></i>
+                    Fan
+                </button>
+
+                <button class="btn-device btn-off" id="btn3">
+                    <i class="fas fa-snowflake"></i>
+                    AC
+                </button>
+
+                <button class="btn-device btn-off" id="btn4">
+                    <i class="fas fa-plug"></i>
+                    Fridge
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+
+    <div class="footer-btns">
+
+        <button id="allOff">
+            <i class="fas fa-power-off"></i>
+            EMERGENCY SHUTDOWN
+        </button>
+
+        <button id="logoutBtn">
+            Logout
+        </button>
+
+    </div>
+
+</div>
+
+<!-- FIREBASE -->
+
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+
+<script>
+
+/* FIREBASE CONFIG */
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyCuGWFGCUMByBnOwtH_e0QbiMQelQxL7cQ",
+
+    authDomain: "project1-881b2.firebaseapp.com",
+
+    databaseURL: "https://project1-881b2-default-rtdb.europe-west1.firebasedatabase.app",
+
+    projectId: "project1-881b2",
+
+    storageBucket: "project1-881b2.firebasestorage.app",
+
+    messagingSenderId: "663620030897",
+
+    appId: "1:663620030897:web:085a490249e8960fddad90"
+
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+
+const db = firebase.database();
+
+/* CLOCK */
+
+setInterval(() => {
+
+    const now = new Date();
+
+    document.getElementById("liveTime").innerText =
+        now.toLocaleTimeString();
+
+    document.getElementById("liveDate").innerText =
+        now.toLocaleDateString('en-GB',{
+            weekday:'long',
+            day:'numeric',
+            month:'short'
+        });
+
+},1000);
+
+/* BACKGROUND */
+
+function updateDailyBg(){
+
+    const seed = new Date().toDateString();
+
+    document.body.style.backgroundImage =
+    `linear-gradient(rgba(0,0,0,0.4),
+    rgba(0,0,0,0.4)),
+    url('https://picsum.photos/seed/${btoa(seed)}/1920/1080')`;
+
+}
+
+updateDailyBg();
+
+/* LOGIN */
+
+document.getElementById("loginBtn").onclick = () => {
+
+    const email =
+        document.getElementById("email").value;
+
+    const password =
+        document.getElementById("password").value;
+
+    auth.signInWithEmailAndPassword(email,password)
+
+    .then(() => {
+
+        document.getElementById("loginOverlay").style.display = "none";
+
+        document.getElementById("dashboardContent").style.display = "flex";
+
+        startLiveSync();
+
+    })
+
+    .catch(error => {
+
+        const err =
+            document.getElementById("loginError");
+
+        err.style.display = "block";
+
+        err.innerText =
+            "Login Failed : " + error.message;
+
     });
 
-    function startRelayControl() {
-      const db = firebase.database();
+};
 
-      const relays = [
-        { id: 1, path: "relay1" },
-        { id: 2, path: "relay2" },
-        { id: 3, path: "relay3" },
-        { id: 4, path: "relay4" },
-      ];
+/* LIVE SYNC */
 
-      relays.forEach(relay => {
-        const statusText = document.getElementById(`status${relay.id}`);
-        const toggleButton = document.getElementById(`btn${relay.id}`);
-        const relayRef = db.ref("/" + relay.path);
+function startLiveSync(){
 
-        relayRef.on("value", (snapshot) => {
-          const state = snapshot.val();
-          statusText.innerText = state ? "ON" : "OFF";
-          toggleButton.style.backgroundColor = state ? "green" : "blue";
+    /* TEMPERATURE */
+
+    db.ref("temperature").on("value", snap => {
+
+        const val = snap.val();
+
+        if(val !== null){
+
+            document.getElementById("tempVal").innerText =
+                parseFloat(val).toFixed(1);
+
+            document.getElementById("tempGauge").style.background =
+                `conic-gradient(var(--primary)
+                ${(val/50)*360}deg,
+                #e2e8f0 0deg)`;
+        }
+
+    });
+
+    /* HUMIDITY */
+
+    db.ref("humidity").on("value", snap => {
+
+        const val = snap.val();
+
+        if(val !== null){
+
+            document.getElementById("humVal").innerText =
+                parseFloat(val).toFixed(1);
+
+        }
+
+    });
+
+    /* MOTION */
+
+    db.ref("motionStatus").on("value", snap => {
+
+        const active = snap.val();
+
+        const box =
+            document.getElementById("motStatus");
+
+        if(active){
+
+            box.innerText = "MOTION DETECTED!";
+
+            box.style.background = "#fff5f5";
+
+            box.style.color = "#c53030";
+
+        }
+        else{
+
+            box.innerText = "AREA SECURE";
+
+            box.style.background = "#f0fff4";
+
+            box.style.color = "#2f855a";
+        }
+
+    });
+
+    /* RELAYS */
+
+    [1,2,3,4].forEach(i => {
+
+        const relayRef =
+            db.ref("relay" + i);
+
+        relayRef.on("value", snap => {
+
+            const state = snap.val();
+
+            const btn =
+                document.getElementById("btn" + i);
+
+            btn.className =
+                state ?
+                "btn-device btn-on" :
+                "btn-device btn-off";
+
         });
 
-        toggleButton.onclick = () => {
-          relayRef.get().then(snap => {
-            relayRef.set(!snap.val());
-          });
+        document.getElementById("btn" + i).onclick = () => {
+
+            relayRef.once("value").then(snap => {
+
+                relayRef.set(!snap.val());
+
+            });
+
         };
-      });
 
-      document.getElementById("allOffBtn").onclick = () => {
-        relays.forEach(relay => {
-          db.ref("/" + relay.path).set(false);
-        });
-      };
-    }
+    });
 
-    document.getElementById("logoutBtn").onclick = () => {
-      firebase.auth().signOut()
-        .then(() => {
-          dashboard.style.display = "none";
-          loginForm.style.display = "block";
-          document.getElementById("email").value = "";
-          document.getElementById("password").value = "";
-        })
-        .catch(error => {
-          alert("Logout failed: " + error.message);
-        });
-    };
-  </script>
+}
+
+/* ALL OFF */
+
+document.getElementById("allOff").onclick = () => {
+
+    db.ref().update({
+
+        relay1:false,
+        relay2:false,
+        relay3:false,
+        relay4:false
+
+    });
+
+};
+
+/* LOGOUT */
+
+document.getElementById("logoutBtn").onclick = () => {
+
+    auth.signOut().then(() => {
+
+        location.reload();
+
+    });
+
+};
+
+/* INTERNET CHECK */
+
+window.addEventListener("offline", () => {
+
+    alert("Internet Disconnected");
+
+});
+
+</script>
+
 </body>
 </html>
